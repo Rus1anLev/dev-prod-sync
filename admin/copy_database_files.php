@@ -16,8 +16,6 @@ $APPLICATION->SetTitle(GetMessage("SLAM_INCLUDE_AREA_MODULE"));
 //FORM:
 $aTabs = array(
     array("DIV" => "edit1", "TAB" => GetMessage("INCLUDE_AREA_TAB_DB"), "ICON" => "smile", "TITLE" => GetMessage("INCLUDE_AREA_TAB_TITLE_DB")),
-    array("DIV" => "edit2", "TAB" => GetMessage("INCLUDE_AREA_TAB_CORE"), "ICON" => "smile", "TITLE" => GetMessage("INCLUDE_AREA_TAB_TITLE_CORE")),
-    array("DIV" => "edit3", "TAB" => GetMessage("INCLUDE_AREA_TAB_UPLOAD"), "ICON" => "smile", "TITLE" => GetMessage("INCLUDE_AREA_TAB_TITLE_UPLOAD")),
 );
 $tabControl = new CAdminTabControl("tabControl", $aTabs);
 $tabControl->Begin();
@@ -44,46 +42,7 @@ $arDefaultOptions =  \Bitrix\Main\Config\Option::getDefaults($MODULE_ID);
         </td>
     </tr>
 
-<?
-$tabControl->BeginNextTab();
-?>
-    <tr>
-        <td>
-            <form class = 'js-form' method="POST" action="<?= $APPLICATION->GetCurPageParam() ?>" name="copy_core"
-                  enctype="multipart/form-data">
 
-                <input type="hidden" name="Update" value="Y"/>
-                <input type="hidden" name="lang" value="<?= LANG ?>"/>
-                <input type="hidden" name="ID" value="<?= $ID ?>"/>
-
-
-                <button class="adm-btn js-copy-core" data-sended="false">Копировать файлы ядра с prod на dev</button>
-            </form>
-        </td>
-        <td style="width:70%; padding-left: 40px;">
-            <div class = 'js-result-core'></div>
-        </td>
-    </tr>
-<?
-$tabControl->BeginNextTab();
-?>
-    <tr>
-        <td>
-            <form class = 'js-form' method="POST" action="<?= $APPLICATION->GetCurPageParam() ?>" name="copy_upload"
-                  enctype="multipart/form-data">
-
-                <input type="hidden" name="Update" value="Y"/>
-                <input type="hidden" name="lang" value="<?= LANG ?>"/>
-                <input type="hidden" name="ID" value="<?= $ID ?>"/>
-
-
-                <button class="adm-btn js-copy-upload" data-sended="false">Копировать файлы upload с prod на dev</button>
-            </form>
-        </td>
-        <td style="width:70%; padding-left: 40px;">
-            <div class = 'js-result-upload'></div>
-        </td>
-    </tr>
 <?
 
 
@@ -159,54 +118,7 @@ $tabControl->End();
 
             return false;
         });
-
-        $(".js-copy-core").on("click", function () {
-            resultBlockCore.html('Процесс запущен. Дождитесь окончания...');
-            BX.showWait();
-            $.ajax({
-                type: 'post',
-                url: '/local/modules/medialine.base/include/ajax_copy_core.php',//url адрес файла обработчика
-                //data: {},
-                dataType: 'json',
-                success: function (result) {
-                    try {
-                        if(result['success'] == 'Y'){
-                            resultBlockCore.html(result['message'] + ' ' + result['sub_message']  + '<br><br>');
-                        }
-                    }
-                    catch (e) {
-                        console.log(e);
-                    }
-                    BX.closeWait();
-                }
-            });
-
-            return false;
-        });
-
-        $(".js-copy-upload").on("click", function () {
-            resultBlockUpload.html('Процесс запущен. Дождитесь окончания...');
-            BX.showWait();
-            $.ajax({
-                type: 'post',
-                url: '/local/modules/medialine.base/include/ajax_copy_upload.php',//url адрес файла обработчика
-                //data: {},
-                dataType: 'json',
-                success: function (result) {
-                    try {
-                        if(result['success'] == 'Y'){
-                            resultBlockUpload.html(result['message'] + ' ' + result['sub_message']  + '<br><br>');
-                        }
-                    }
-                    catch (e) {
-                        console.log(e);
-                    }
-                    BX.closeWait();
-                }
-            });
-
-            return false;
-        });
+        
 
         $('form.js-form').on('submit', function(e){
             e.preventDefault();

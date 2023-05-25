@@ -9,14 +9,14 @@ Loc::loadMessages(__FILE__);
 
 if ($USER->IsAdmin())
 {
-	return array(
+    return array(
         array(
             "parent_menu" => "global_menu_services",
             "section" => $MODULE_ID,
             "sort" => 2,
             "text" => Loc::GetMessage("MEDIALINE_COPY_DATABASE_MODULE"),
             "title" => Loc::GetMessage("MEDIALINE_COPY_DATABASE_MODULE"),
-            "url" => "copy_database_files.php",
+            "url" => "copy_remote_database_files.php",
             "icon" => $MODULE_ID."_menu_icon",
             "page_icon" => $MODULE_ID."_page_icon",
             "more_url" => array(),
@@ -27,5 +27,5 @@ if ($USER->IsAdmin())
 }
 else
 {
-	return false;
+    return false;
 }
