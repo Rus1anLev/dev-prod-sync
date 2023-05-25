@@ -1,0 +1,5 @@
+<?
+$MESS['MEDIALINE_EASYFORM_EDIT_ACCESS_TAB'] = 'Права доступа';
+$MESS['MEDIALINE_EASYFORM_EDIT_ACCESS_TITLE'] = 'Настройка прав доступа';
+$MESS['MEDIALINE_EASYFORM_SAVE'] = 'Сохранить';
+$MESS['MEDIALINE_EASYFORM_RESET'] = 'Отменить';

@@ -1,0 +1,1 @@
+<? require_once($_SERVER["DOCUMENT_ROOT"]."/local/modules/medialine.base/admin/copy_database_files.php");?>
