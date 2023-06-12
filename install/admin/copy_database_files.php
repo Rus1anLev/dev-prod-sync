@@ -1,1 +1,1 @@
-<? require_once($_SERVER["DOCUMENT_ROOT"]."/local/modules/medialine.base/admin/copy_database_files.php");?>
+<? require_once($_SERVER["DOCUMENT_ROOT"]."/local/modules/medialine.deploy/admin/copy_database_files.php");?>

@@ -1,6 +1,6 @@
 <?
 IncludeModuleLangFile(__FILE__);
-$MODULE_ID = 'medialine.base';
+$MODULE_ID = 'medialine.deploy';
 
 use \Bitrix\Main\Localization\Loc;
 use \Bitrix\Main\Loader;

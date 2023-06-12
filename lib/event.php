@@ -1,5 +1,5 @@
 <?
-namespace Slam\Base;
+namespace Medialine\Deploy;
 IncludeModuleLangFile(__FILE__); 
 
 /** 
@@ -7,8 +7,8 @@ IncludeModuleLangFile(__FILE__);
  */ 
 class Event
 { 
-    const MODULE_ID = 'medialine.base';
-    var $MODULE_ID = 'medialine.base';
+    const MODULE_ID = 'medialine.deploy';
+    var $MODULE_ID = 'medialine.deploy';
 
     private function ShowPanel()
     {

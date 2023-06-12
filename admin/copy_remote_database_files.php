@@ -1,8 +1,10 @@
 <?
-$MODULE_ID = 'medialine.base';
+$MODULE_ID = 'medialine.deploy';
 define("ADMIN_MODULE_NAME", $MODULE_ID);
 
 use Bitrix\Main\Config\Option;
+use Bitrix\Main\Loader;
+
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_before.php");
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
@@ -23,9 +25,23 @@ $tabControl = new CAdminTabControl("tabControl", $aTabs);
 $tabControl->Begin();
 $tabControl->BeginNextTab();
 
-$arDefaultOptions =  \Bitrix\Main\Config\Option::getDefaults($MODULE_ID);
 
+$testDB = -1;
+if(Loader::IncludeModule($MODULE_ID)) {
+    try{
+        $connect = new \Medialine\Deploy\ConnectSSH();
+        $testConnect = $connect->testConnect();
+
+        $testDB = $connect->testDB();
+    }catch (Exception $e){
+        echo $e->getMessage();
+    }
+
+}
+
+//exec("ssh -p ".$arDefaultOptions['DEV_REMOTE_PORT']."' " . $arDefaultOptions['DEV_REMOTE_HOST'], $testConnection);
 ?>
+
     <tr>
         <td>
             <form class = 'js-form' method="POST" action="<?= $APPLICATION->GetCurPageParam() ?>" name="copy_database"
@@ -35,8 +51,11 @@ $arDefaultOptions =  \Bitrix\Main\Config\Option::getDefaults($MODULE_ID);
                 <input type="hidden" name="lang" value="<?= LANG ?>"/>
                 <input type="hidden" name="ID" value="<?= $ID ?>"/>
 
-
+                <?if($testDB === 0):?>
                 <button class="adm-btn js-copy" data-sended="false">Копировать бд с prod на dev</button>
+                <?else:?>
+                    <p>Проверьте правильность настроек в файле defaul_option.php</p>
+                <?endif;?>
             </form>
         </td>
         <td style="width:70%; padding-left: 40px;">
@@ -56,8 +75,11 @@ $tabControl->BeginNextTab();
                 <input type="hidden" name="lang" value="<?= LANG ?>"/>
                 <input type="hidden" name="ID" value="<?= $ID ?>"/>
 
-
+                <?if($testDB === 0):?>
                 <button class="adm-btn js-copy-core" data-sended="false">Копировать файлы ядра с prod на dev</button>
+                <?else:?>
+                <p>Проверьте правильность настроек в файле defaul_option.php</p>
+                <?endif;?>
             </form>
         </td>
         <td style="width:70%; padding-left: 40px;">
@@ -76,8 +98,11 @@ $tabControl->BeginNextTab();
                 <input type="hidden" name="lang" value="<?= LANG ?>"/>
                 <input type="hidden" name="ID" value="<?= $ID ?>"/>
 
-
+                <?if($testDB === 0):?>
                 <button class="adm-btn js-copy-upload" data-sended="false">Копировать файлы upload с prod на dev</button>
+                <?else:?>
+                    <p>Проверьте правильность настроек в файле defaul_option.php</p>
+                <?endif;?>
             </form>
         </td>
         <td style="width:70%; padding-left: 40px;">
@@ -107,10 +132,13 @@ $tabControl->End();
         </pre>
 
     </p>
-    <p>
-        <span class="required">Важно! Обязательно проверьте правильность настроек!</span>
-    </p>
 
+    <p>
+        Статус подключения к удаленному серверу: <?= $testConnect === 0 ? '<span style="color: green;"><b>Успешно</b></span>' : '<span style="color: red;"><b>Не удалось подключиться!</b></span>'; ?>
+    </p>
+    <p>
+        Статус соединения с удаленной базой данных: <?= $testDB === 0 ? '<span style="color: green;"><b>Успешно</b></span>' : '<span style="color: red;"><b>Не удалось подключиться!</b></span>'; ?>
+    </p>
 <?echo EndNote();?>
     <script>
         let resultBlock = $('.js-result');
@@ -125,7 +153,7 @@ $tabControl->End();
 
             $.ajax({
                 type: 'post',
-                url: '/local/modules/medialine.base/include/ajax_copy_database.php',//url адрес файла обработчика
+                url: '/local/modules/medialine.deploy/include/ajax_copy_database.php',//url адрес файла обработчика
                 data: {'step': step,remote: "Y"},
                 dataType: 'json',
                 success: function (result) {
@@ -165,7 +193,7 @@ $tabControl->End();
             BX.showWait();
             $.ajax({
                 type: 'post',
-                url: '/local/modules/medialine.base/include/ajax_copy_core.php',//url адрес файла обработчика
+                url: '/local/modules/medialine.deploy/include/ajax_copy_core.php',//url адрес файла обработчика
                 data: {remote: "Y"},
                 dataType: 'json',
                 success: function (result) {
@@ -189,7 +217,7 @@ $tabControl->End();
             BX.showWait();
             $.ajax({
                 type: 'post',
-                url: '/local/modules/medialine.base/include/ajax_copy_upload.php',//url адрес файла обработчика
+                url: '/local/modules/medialine.deploy/include/ajax_copy_upload.php',//url адрес файла обработчика
                 data: {remote: "Y"},
                 dataType: 'json',
                 success: function (result) {

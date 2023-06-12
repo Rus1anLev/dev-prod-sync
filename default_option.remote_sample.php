@@ -1,6 +1,6 @@
 <?
 
-$medialine_base_default_option = array(
+$medialine_deploy_default_option = array(
     "DEV_SITE_DIR" => "", // /home/bitrix',
     "DEV_DATABASE_NAME" => "", // "sitemanager",
     "DEV_DATABASE_LOGIN" => "", // "bitrix0",
@@ -9,4 +9,7 @@ $medialine_base_default_option = array(
     "DEV_REMOTE_HOST" => "", // 'bitrix@ovz2.j3913489.pv29m.vps.myjino.ru', user@ip_address
     "DEV_REMOTE_CORE" => "", // '/home/bitrix/www/bitrix/', путь к папке ядра
     "DEV_REMOTE_UPLOAD" => "", //'/home/bitrix/www/upload/' путь к папке аполад
+
+    "TG_TOKEN" => "", // "6283167262:AAG49uDHT9ei7ccLl0l_xxLb7V4UOvs1P9E" // токен телеграм бота t.me/medialine_deploy_bot
+    "TG_CHAT_ID" => "", // ID чата, куда бот будет слать уведомления
 );

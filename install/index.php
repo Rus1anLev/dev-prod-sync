@@ -12,12 +12,12 @@ use \Bitrix\Main\Config as Conf;
 
 Loc::loadMessages(__FILE__);
 
-if (!class_exists("medialine_base")) {
+if (!class_exists("medialine_deploy")) {
 
-    class medialine_base extends CModule
+    class medialine_deploy extends CModule
     {
-        const MODULE_ID = 'medialine.base';
-        public $MODULE_ID = "medialine.base";
+        const MODULE_ID = 'medialine.deploy';
+        public $MODULE_ID = "medialine.deploy";
         public $MODULE_VERSION;
         public $MODULE_VERSION_DATE;
         public $MODULE_NAME;
@@ -81,11 +81,15 @@ if (!class_exists("medialine_base")) {
                     $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/copy_database_files.php", true, true);
                 CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/install/admin/menu.php",
                     $_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/admin/menu.php", true, true);
+                CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/default_option.local_sample.php",
+                    $_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/default_option.php", true, true);
             }else{
                 CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/install/admin/copy_remote_database_files.php",
                     $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/copy_remote_database_files.php", true, true);
                 CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/install/admin/menu_remote.php",
                     $_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/admin/menu.php", true, true);
+                CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/default_option.remote_sample.php",
+                    $_SERVER["DOCUMENT_ROOT"]."/local/modules/".$this->MODULE_ID."/default_option.php", true, true);
             }
 
 

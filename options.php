@@ -4,7 +4,7 @@ use \Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
 
-$module_id = 'medialine.base';
+$module_id = 'medialine.deploy';
 
 if($_REQUEST['autosave_id']){
     $insertManually = $_REQUEST['USE_MANUALLY'] ? $_REQUEST['USE_MANUALLY'] : 'N';
@@ -62,7 +62,7 @@ while ($site = $dbSites->fetch()) {
 
 $arOptions = $arOptionsSite;
 if(Loader::IncludeModule($module_id)){
-    $opt = new \Medialine\Base\Options($module_id, $aSitesTabs, $arTabs, $arGroups,  $arOptions, $showRightsTab);
+    $opt = new \Medialine\Deploy\Options($module_id, $aSitesTabs, $arTabs, $arGroups,  $arOptions, $showRightsTab);
     $opt->ShowHTML();
 }
 ?>

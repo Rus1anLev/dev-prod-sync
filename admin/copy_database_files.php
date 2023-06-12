@@ -1,5 +1,5 @@
 <?
-$MODULE_ID = 'medialine.base';
+$MODULE_ID = 'medialine.deploy';
 define("ADMIN_MODULE_NAME", $MODULE_ID);
 
 use Bitrix\Main\Config\Option;
@@ -84,7 +84,7 @@ $tabControl->End();
 
             $.ajax({
                 type: 'post',
-                url: '/local/modules/medialine.base/include/ajax_copy_database.php',//url адрес файла обработчика
+                url: '/local/modules/medialine.deploy/include/ajax_copy_database.php',//url адрес файла обработчика
                 data: {'step': step},
                 dataType: 'json',
                 success: function (result) {
