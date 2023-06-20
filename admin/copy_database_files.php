@@ -3,6 +3,7 @@ $MODULE_ID = 'medialine.deploy';
 define("ADMIN_MODULE_NAME", $MODULE_ID);
 
 use Bitrix\Main\Config\Option;
+use Bitrix\Main\Loader;
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_before.php");
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
@@ -23,6 +24,17 @@ $tabControl->BeginNextTab();
 
 $arDefaultOptions =  \Bitrix\Main\Config\Option::getDefaults($MODULE_ID);
 
+$testDB = -1;
+if(Loader::IncludeModule($MODULE_ID)) {
+    try{
+        $connect = new \Medialine\Deploy\ConnectSSH();
+
+        $testDB = $connect->testLocalDB();
+    }catch (Exception $e){
+        echo $e->getMessage();
+    }
+
+}
 ?>
     <tr>
         <td>
@@ -68,6 +80,9 @@ $tabControl->End();
     </p>
     <p>
         <span class="required">Важно! Обязательно проверьте правильность настроек!</span>
+    </p>
+    <p>
+        Статус соединения с базой данных: <?= $testDB === 0 ? '<span style="color: green;"><b>Успешно</b></span>' : '<span style="color: red;"><b>Не удалось подключиться!</b></span>'; ?>
     </p>
 
 <?echo EndNote();?>

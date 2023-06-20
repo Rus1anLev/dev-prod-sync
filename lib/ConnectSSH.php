@@ -36,6 +36,12 @@ class ConnectSSH
         return $status;
     }
 
+    public function testLocalDB()
+    {
+        system('mysql -u '.$this->arDefaultOptions['DEV_DATABASE_LOGIN'].' -p'.$this->arDefaultOptions['DEV_DATABASE_PASSWORD'], $status);
+        return $status;
+    }
+
 
     public function exec($cmd) {
 
